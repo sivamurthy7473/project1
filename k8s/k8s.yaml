@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: mydeploy 
+  labels: 
+    sang: sangam 
+spec: 
+  minReadySeconds: 5
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector: 
+    matchLabels: 
+      app: nginx
+  strategy: 
+    type: RollingUpdate
+    rollingUpdate: 
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template: 
+    metadata:
+      name: mypod 
+      labels: 
+        app: nginx
+    spec:
+      containers: 
+        - name: mycon 
+          image: nginx
+          ports:
+            - containerPort: 80
